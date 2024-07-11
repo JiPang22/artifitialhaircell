@@ -1,11 +1,12 @@
 program aa
 implicit none
 
-integer i,imax
-real t,v,vs,y,dt,dv,dvs,dy,gam,taua,u1,u2,z1,z2
-parameter(imax=500000)
-real, dimension(imax) :: noise
-open(1,file='xx')
+integer i,imax,j
+real t,v,vs,y,dt,dv,dvs,dy,gam,taua,u1,u2,z1,z2,sumi,sumr,om,tmax
+parameter(tmax=1500.,dt=1.e-2, taua=0.1)
+parameter(imax=int(tmax/dt))
+real, dimension(imax) :: noise,xt
+
 
 
 !make noise
@@ -23,20 +24,20 @@ noise(2 * i) = z2
 end do
 
 
-gam = 0.04 
+gam = 0.1 ! gam/w0 
 v = 1. ! v0 = 450 mV
 y = 0.
 t = 0. ! t0 = 10 ms
 vs = 0.
 
-dt = 1.e-2
-taua = 1000. ! taua/t0
 
+open(1,file='xx')
 do i=0,imax
 
 write(1,*) t,v
 
-dy = -gam*y -v +sign(1.,v-vs)+2.e-2*noise(i)
+dy = -gam*y -v +sign(1.,v-vs) +2.e-2*noise(i)
+!dy = -gam*y -v!forceoff
 dv = y
 dvs = (v-vs)/taua
 
@@ -46,4 +47,20 @@ vs=vs+dvs*dt
 t=t+dt
 
 end do
+open(2,file='wx')
+do j=1,50
+om=6.28*j/(imax*dt)
+
+!reset
+t=0.
+sumr=0.
+sumi=0.
+!sum
+do i=1,imax
+t=t+dt
+sumr=sumr+xt(i)*cos(om*t)*dt
+sumi=sumi-xt(i)*sin(om*t)*dt
+enddo
+write(2,*) om, sqrt(sumi**2+sumr**2)
+enddo
 end
