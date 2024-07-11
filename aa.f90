@@ -26,7 +26,7 @@ end do
 
 gam = 0.1 ! gam/w0 
 v = 1. ! v0 = 450 mV
-y = 0.
+y = 0. !dv/dt = y
 t = 0. ! t0 = 10 ms
 vs = 0.
 
@@ -36,8 +36,8 @@ do i=0,imax
 
 write(1,*) t,v
 
-dy = -gam*y -v +sign(1.,v-vs) +2.e-2*noise(i)
-!dy = -gam*y -v!forceoff
+!dy = -gam*y -v +sign(1.,v-vs) +2.e-2*noise(i)
+dy = -gam*y -v +2.e-2*noise(i) !forceoff
 dv = y
 dvs = (v-vs)/taua
 
