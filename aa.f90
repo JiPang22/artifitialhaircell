@@ -3,7 +3,7 @@ implicit none
 
 integer i,imax,j
 real t,v,vs,y,dt,dv,dvs,dy,gam,taua,u1,u2,z1,z2,sumi,sumr,om,tmax
-parameter(tmax=1500.,dt=1.e-2, taua=0.1)
+parameter(tmax=1000.,dt=1.e-2, taua=0.1)
 parameter(imax=int(tmax/dt))
 real, dimension(imax) :: noise,xt
 
@@ -32,10 +32,10 @@ vs = 0.
 
 
 open(1,file='xx')
-do i=0,imax
+do i=1,imax
 
 write(1,*) t,v
-
+xt(i)=v
 !dy = -gam*y -v +sign(1.,v-vs) +2.e-2*noise(i)
 dy = -gam*y -v +2.e-2*noise(i) !forceoff
 dv = y
@@ -47,20 +47,25 @@ vs=vs+dvs*dt
 t=t+dt
 
 end do
-open(2,file='wx')
-do j=1,50
-om=6.28*j/(imax*dt)
+open(2,file='ww')
+
+do j=1,200
+om=6.28*j/tmax
+!om=j/tmax
 
 !reset
 t=0.
 sumr=0.
 sumi=0.
-!sum
+
 do i=1,imax
 t=t+dt
 sumr=sumr+xt(i)*cos(om*t)*dt
 sumi=sumi-xt(i)*sin(om*t)*dt
 enddo
+
 write(2,*) om, sqrt(sumi**2+sumr**2)
+write(*,*) om, xt(i)
+
 enddo
 end
