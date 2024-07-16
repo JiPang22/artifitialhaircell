@@ -8,7 +8,7 @@ program read_csv
     character(len=100) :: filename
 real tt(n),xt(n), om,dt,sumr,sumi
 integer j
-    filename = '44.csv'
+    filename = 'data.csv'
 
     open(unit=10, file=filename, status='old', action='read')
 

@@ -1,8 +1,3 @@
-LECROYWR6051,12904,Waveform
-Segments,1,SegmentSize,100002
-Segment,TrigTime,TimeSinceSegment1
-#1,01-Jan-2002 04:09:26,0                 
-Time,Ampl
 -0.00050000875,0.0883892
 -0.00049999875,0
 -0.00049998875,0
