@@ -2,8 +2,8 @@ program aa
     implicit none
     
     integer i,imax,j,k
-    real t,x,y,dt,dx,dx_dash,dy,u1,u2,z1,z2,sumi,sumr
-    parameter(imax=1000)
+    real t,x,y,dt,dx,dx_dash,dy,u1,u2,z1,z2,sumi,sumr,om,x_dash
+    parameter(imax=100000)
     real, dimension(imax) :: noise,xt
     
     !make file
@@ -26,21 +26,35 @@ program aa
     noise(2 * i) = z2
     end do
 
+
+!con.
+t=0.
+x=1.
+x_dash=0.
+y=0.
+dt=1.e-2
+k=0.
+j=1.
+
 !calculate trajectory
     do i=1,imax
 
         write(1,*) t,x
         xt(i)=x
 
+
+t=i*dt
+om=0.9+k*0.2
+
         
-        dy = -gam*y -v +sign(1.,v-vs) +(2.e-2)*noise(i)+f*sin(w*t)  !add ext signal
+        dy = -.1*y -x +sign(1.,x-x_dash) +(2.e-2)*noise(i)+0.01*j*sin(om*t)  !add ext signal
         
-        dv = y
-        dvs = (v-vs)/taua
+        dx = y
+        dx_dash = (x-x_dash)/.1
         
         y = y +dy*dt
-        v = v +dv*dt
-        vs=vs+dvs*dt
-        t=t+dt
+        x = x +dx*dt
+        x_dash  = x_dash +dx_dash * dt
         
  end do
+end
