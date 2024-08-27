@@ -1,6 +1,5 @@
 program aa
 implicit none
-
 integer i,imax,j,k,l
 real t,v,vs,y,dt,dv,dvs,dy,gam,taua,u1,u2,z1,z2
 real sumi,sumr,om,tmax,w,f
@@ -8,7 +7,7 @@ parameter(tmax=1000.,dt=1.e-2, taua=0.1,gam=0.1)
 parameter(imax=int(tmax/dt))
 real, dimension(imax) :: noise,xt
 
-!make file
+!!make file
 open(1,file='xx')
 open(2,file='ww')
 open(3,file='ff')
