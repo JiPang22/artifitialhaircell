@@ -1,6 +1,6 @@
 program aa
-integer i,j,jmax
-integer, parameter :: imax=1000000
+integer i,j,jmax,k
+integer, parameter :: imax=100000
 real :: t,x,y,dx,dy,sumi,sumr,om,z1,z2,u1,u2,F,xa,dxa,eta,omext,dom
 real, dimension(imax) :: xt,noise
 real, parameter :: dt=1.e-2,tau=.1,gam=0.1
@@ -16,13 +16,15 @@ noise(2 * i - 1) = z1
 noise(2 * i) = z2
 end do
 !!!!!!!!!!!!!!!!!!!!!노이즈 생성 끝!!!!!!!!!!!!!!!!!!
+do k=0,10
 
 t=0.
 x=1.
 y=0.
 xa=0.
 eta=1.
-F=0.01*eta
+!F=0.01*eta+0.01*k
+F=1.*eta+1.*k
 omext=0.5
 
 do i=1,imax
@@ -40,6 +42,7 @@ sumr=0.
 sumi=0.
 dom=6.28/(imax*dt)
 jmax=int(5/dom)
+
 do j=1,jmax
 om=6.28*j/(imax*dt)
 t=0.
@@ -52,5 +55,7 @@ t=i*dt
 sumi=sumi+xt(i)*sin(om*t)*dt
 sumr=sumr+xt(i)*cos(om*t)*dt
 enddo
+enddo
+write(1,*) ''
 enddo
 end
