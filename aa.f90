@@ -27,7 +27,7 @@ F=0.1*eta
 !F=0.01*eta+0.01*k
 !F=1.*eta+1.*k
 omext=0.01*k
-
+!!!
 do i=1,imax
 xt(i)=x
 dy=-x+(1./2.)*eta*sign(1.,x-xa)-gam*y+(0.001)*noise(i)+F*sin(omext*t)
