@@ -1,6 +1,6 @@
 program aaa
 IMPLICIT NONE
-integer i,j,jmax,k,jmin,numdata
+integer i,j,jmax,jmin,numdata
 integer, parameter :: imax=10000,kmax=1000
 real :: t,x,y,dx,dy,sumi,sumr,om,z1,z2,u1,u2,F,xa,dxa,eta,omext,dom,x_dash,dx_dash,A,tau_a,gam,dt,dom_ext,ommax,ommin
 real, dimension(imax) :: xt,noise,A_omext,noise_tilda
