@@ -8,14 +8,15 @@ real, dimension(imax) :: xt,noise,A_omext,noise_tilda
 
 !conditons
 !>> w_ext == [0.9, 1.1]
-ommin=0.9
-ommax=1.1
+ommin = 0.9
+ommax = 1.1
 
-numdata=1000 !>> number of data point
+numdata = 1000 !>> number of data point
 
 dom_ext = (ommax-ommin)/numdata  !>> delta om_ext
 
-
+jmin = int(ommin/dom_ext)
+jmax = int(ommax/dom_ext)
 
 
 
