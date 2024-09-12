@@ -56,7 +56,7 @@ y = y + dy*dt
 x = x + dx*dt
 x_dash = x_dash +dx_dash*dt 
 end do !>> time simul end // !>> fixed omext >> recode xt >> i end
-
+!
 
 !do j=1,jmax
 !om=6.28*j/(imax*dt)
