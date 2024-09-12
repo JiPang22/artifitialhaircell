@@ -17,3 +17,10 @@ noise(2 * i - 1) = z1
 noise(2 * i) = z2
 end do
 !!!!!!!!!!!!!!!!!!!!!노이즈 생성 끝!!!!!!!!!!!!!!!!!!
+
+!t0 == 1/om0
+!x_tlida == x/l 
+!x_tilda^dash == x^dash/l
+!eta_tilda == eta/(m * om0^2 * l)
+!A_tilda == (A/eta) * eta_tilda
+!tau_a^tilda == om0 * tau_a
