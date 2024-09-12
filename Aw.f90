@@ -3,21 +3,15 @@ IMPLICIT NONE
 integer i,j,jmax,jmin,numdata
 integer, parameter :: imax=10000,kmax=1000
 real :: t,x,y,dx,dy,sumi,sumr,om,z1,z2,u1,u2,F,xa,dxa,eta,omext,dom,x_dash,dx_dash,A,tau_a,gam,dt,dom_ext,ommax,ommin
-real, dimension(imax) :: xt,noise,A_omext,noise_tilda
+real, dimension(imax+1) :: xt,noise,noise_tilda
 
 
 !conditons
-!>> w_ext == [0.9, 1.1]
-ommin = 0.9
-ommax = 1.1
-
-numdata = 1000 !>> number of data point
-
-dom_ext = (ommax-ommin)/numdata  !>> delta om_ext
-
-jmin = int(ommin/dom_ext)
-jmax = int(ommax/dom_ext)
-
+parameter(ommax = 1.1)
+parameter(numdata = 1000) !>> number of data point
+parameter(jmax=1+numdata)  !>> delta om_ext
+real, dimension(jmax+1) :: A_omext
+dom_ext=1.1/jmax
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!노이즈 생성 !!!!!!!!!!!!!!!!!!
@@ -48,7 +42,7 @@ gam = 0.14
 dt = 1.e-2
 
 
-do j = jmin,jmax
+do j = 1,jmax
 !special conditon
 omext = j*dom_ext
 
