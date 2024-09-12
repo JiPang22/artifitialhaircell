@@ -7,8 +7,8 @@ real, dimension(imax+1) :: xt,noise,noise_tilda
 
 
 !conditons
-parameter(ommax = 1.1)
-parameter(numdata = 1000) !>> number of data point
+parameter(ommax = 5.)
+parameter(numdata = 10000) !>> number of data point
 parameter(jmax=1+numdata)  !>> delta om_ext
 real, dimension(jmax+1) :: A_omext
 dom_ext=1.1/jmax
