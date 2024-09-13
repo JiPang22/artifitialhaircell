@@ -52,23 +52,19 @@ x = 1.
 x_dash = 0.
 y = 0.
 
-
-do i=1,imax
+F=0.01*eta
+do i=1,imax !>> i is time index
 xt(i) = x
 noise_tilda(i) = 1.e-2*noise(i)
-dy = -gam*y -x -noise_tilda(i) +(1./2.)*eta*sign(1.,x-x_dash) +A*sin(omext*t)
+dy = -gam*y -x -noise_tilda(i) +(1./2.)*eta*sign(1.,x-x_dash) +F*sin(omext*t)
 dx = y
 dx_dash = (x-x_dash)/tau_a
 
 y = y + dy*dt
 x = x + dx*dt
 x_dash = x_dash +dx_dash*dt 
-end do !>> time simul end // !>> fixed omext >> recode xt >> i end
+end do !>> i end // !>> fixed omext, recode xt
 
-
-!do j=1,jmax
-!om=6.28*j/(imax*dt)
-!write(1,*) omext,sqrt(sumi**2+sumr**2)
 A_omext(j) = 2.*sqrt(sumi**2 + sumr**2) !>> recode A_omext
 
 sumr = 0.
@@ -79,12 +75,7 @@ do i = 1,imax
 t = i*dt
 sumi = sumi+xt(i)*sin(omext*t)*dt
 sumr = sumr+xt(i)*cos(omext*t)*dt
-enddo !>> time integral end >> i end
-
-!enddo
-!write(1,*) ''
-!enddo
-
+end do !>> i end
 end do !>> j end >> fixed omext one special condition end
 
 
