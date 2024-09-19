@@ -21,7 +21,7 @@ real, dimension(imax+1) :: xt,noise,noise_tilda
 !real, dimension(jmax+1) :: A_omext
 parameter(om_max=1.1)
 parameter(om_min=0.9)
-parameter(dom_ext=1.e-2)
+parameter(dom_ext=1.e-3)
 parameter(jmin=int(om_min/dom_ext))
 parameter(jmax=int(om_max/dom_ext))
 real, dimension(jmax+1) :: A_omext
@@ -80,7 +80,7 @@ x_dash = x_dash +dx_dash*dt
 
 end do !>> i end // !>> fixed omext, recode xt
 
-A_omext(j) = 2.*sqrt(sumi**2 + sumr**2) !>> recode A_omext
+!A_omext(j) = 2.*sqrt(sumi**2 + sumr**2) !>> recode A_omext
 
 sumr = 0.
 sumi = 0.
@@ -93,6 +93,8 @@ sumi = sumi+xt(i)*sin(omext*t)*dt
 sumr = sumr+xt(i)*cos(omext*t)*dt
 
 end do !>> i end
+
+A_omext(j) = 2.*sqrt(sumi**2 + sumr**2) !>> recode A_omext
 
 
 end do !>> j end >> fixed omext one special condition end
