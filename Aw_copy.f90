@@ -48,9 +48,9 @@ end do  !>>     end noise make
 
 
 
-do k=1,5 !>> k is index of ext Force
+do k=1,100 !>> k is index of ext Force
 
-F=0.1*eta*k !>> grow ext Force magnitude
+F=0.01*eta*k !>> grow ext Force magnitude
 
 
 do j = jmin,jmax !>> j is index of om_ext
@@ -69,7 +69,7 @@ y = 0.
 do i=1,imax !>> i is time index
 
 xt(i) = x  !>>> recode x(t)
-noise_tilda(i) = 1.e-2*noise(i) !>>  lowing noie magnitude
+noise_tilda(i) = 1.e-1*noise(i) !>>  lowing noie magnitude
 dy = -gam*y -x +noise_tilda(i) +(1./2.)*eta*sign(1.,x-x_dash) +F*sin(omext*t)
 dx = y
 dx_dash = (x-x_dash)/tau_a
