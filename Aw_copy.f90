@@ -16,12 +16,13 @@ real, dimension(imax+1) :: xt,noise,noise_tilda
 
 
 !>>conditons
-parameter(ommax = 5.)
+parameter(ommax = 5.)  !>>  om_ext / om_0 == om_tilda
 parameter(numdata = 10000) !>> number of data point
-parameter(jmax=1+numdata)  !>> delta om_ext
+parameter(jmax=1+numdata) !>> j is index of A_om_ext 
 real, dimension(jmax+1) :: A_omext
 dom_ext=1.1/jmax
 
+open(2,file = 'Aw')  ! >> recode Aw_ext vs w_ext
 
 !>> condations22
 tau_a = 0.1
@@ -45,7 +46,7 @@ end do !>> end noise make
 
 do k=1,10 !>> k is index of ext Force
 
-F=0.01*eta*k !>> grow ext Force
+F=0.01*eta*k !>> grow ext Force magnitude
 
 
 do j = 1,jmax !>> j is index of om_ext
@@ -63,9 +64,9 @@ y = 0.
 
 do i=1,imax !>> i is time index
 
-xt(i) = x
-noise_tilda(i) = 1.e-2*noise(i)
-dy = -gam*y -x -noise_tilda(i) +(1./2.)*eta*sign(1.,x-x_dash) +F*sin(omext*t)
+xt(i) = x  !>>> recode x(t)
+noise_tilda(i) = 1.e-2*noise(i) !>>  lowing noie magnitude
+dy = -gam*y -x +noise_tilda(i) +(1./2.)*eta*sign(1.,x-x_dash) +F*sin(omext*t)
 dx = y
 dx_dash = (x-x_dash)/tau_a
 
@@ -93,7 +94,6 @@ end do !>> i end
 end do !>> j end >> fixed omext one special condition end
 
 
-open(2,file = 'Aw')  ! >> recode Aw_ext vs w_ext
 
 do j = 1,jmax
 
