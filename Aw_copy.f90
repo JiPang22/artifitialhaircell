@@ -48,9 +48,9 @@ end do  !>>     end noise make
 
 
 
-do k=1,10 !>> k is index of ext Force
+do k=1,5 !>> k is index of ext Force
 
-F=0.01*eta*k !>> grow ext Force magnitude
+F=0.1*eta*k !>> grow ext Force magnitude
 
 
 do j = jmin,jmax !>> j is index of om_ext
