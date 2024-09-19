@@ -33,6 +33,7 @@ eta = 1.
 gam = 0.14
 dt = 1.e-2
 
+
     !>>  make noise
 call random_seed()  
 do i = 1, imax / 2
