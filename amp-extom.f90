@@ -1,19 +1,19 @@
 program aaa
 IMPLICIT NONE
 integer i, j, jmax, jmin, k
-integer, parameter :: imax=100000, kmax=1000
+integer, parameter :: imax=62800, kmax=1000
 real  t, x, y, dt, dx, dy, sumi, sumr, z1, z2, u1, u2, F, eta, om_ext
 real x_dash, dx_dash, tau_a, gam, dom_ext, om_max, om_min
 real, dimension(imax + 1) :: xt, noise, noise_tilda
-parameter(om_max = 1.5)
-parameter(om_min = 0.5)
+parameter(om_max = 1.1)
+parameter(om_min = 0.9)
 parameter(dom_ext = 1.e-3)
 parameter(jmin = int(om_min / dom_ext))
 parameter(jmax = int(om_max / dom_ext))
 real, dimension(jmax+1) :: A_om_ext
-parameter(tau_a = 0.5)
+parameter(tau_a = 0.1)
 parameter(eta = 1.)
-parameter(gam = 0.1)
+parameter(gam = 0.2)
 parameter(dt = 1.e-2)
 open(2, file = 'Aw') !>> make file!
 
@@ -30,8 +30,9 @@ noise(2 * i) = z2
 end do  !>>     end noise make
 
 
-do k=1, 100 !>> k is index of ext Force
-F=0.1 * eta * k !>> grow ext Force magnitude
+do k = 1, 10 !>> k is index of ext Force
+F = 0.05 * eta * k       !>> grow ext Force magnitude
+
 do j = jmin, jmax !>> j is index of om_ext
 !special conditon
 om_ext = j * dom_ext
@@ -40,15 +41,16 @@ t = 0.
 x = 1.
 x_dash = 0.
 y = 0.
-do i=1, imax !>> i is time index
+do i = 1, imax !>> i is time index
 xt(i) = x  !>>> recode x(t)
-noise_tilda(i) = 1.e-2 * noise(i)   !>>  lowing noize magnitude
+noise_tilda(i) = 1.e-3 * noise(i)   !>>  lowing noize magnitude
 dy = - gam * y - x + noise_tilda(i) + (1. / 2.) * eta * sign(1., x - x_dash) + F * sin(om_ext * t)
 dx = y
 dx_dash = (x - x_dash) / tau_a
 y = y + dy * dt
 x = x + dx * dt
 x_dash = x_dash + dx_dash * dt 
+t = t + dt
 end do   !>> i end // !>> fixed om_ext, recode xt
 sumr = 0.
 sumi = 0.
