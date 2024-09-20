@@ -1,7 +1,9 @@
 program aaa
 IMPLICIT NONE
 integer i, j, jmax, jmin, k
-integer, parameter :: imax=314159
+!integer, parameter :: imax = 314159
+!integer, parameter :: imax = 628318
+integer, parameter :: imax = 1314159
 real  t, x, y, dt, dx, dy, sumi, sumr, z1, z2, u1, u2, F, eta, om_ext
 real x_dash, dx_dash, tau_a, gam, dom_ext, om_max, om_min
 real, dimension(imax + 1) :: xt, noise, noise_tilda
@@ -50,7 +52,7 @@ dx_dash = (x - x_dash) / tau_a
 y = y + dy * dt
 x = x + dx * dt
 x_dash = x_dash + dx_dash * dt 
-t = t + dt
+t = i * dt
 end do   !>> i end // !>> fixed om_ext, recode xt
 sumr = 0.
 sumi = 0.
