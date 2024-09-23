@@ -1,16 +1,14 @@
 program aaa
 IMPLICIT NONE
-integer i, j, jmax, jmin, k
-integer, parameter :: imax = int(1.e+5)
-real  t, x, y, dt, dx, dy, sumi, sumr, z1, z2, u1, u2, F, eta, om_ext
-real x_dash, dx_dash, tau_a, gam, dom_ext, om_max, om_min
+real, parameter :: tmax = 10., dt = 1 / (2 * 2 * 1.e+3)
+integer i, j, k
+integer, parameter :: imax = int(tmax/dt)
+real  t, x, y, dx, dy, sumi, sumr, z1, z2, u1, u2, F, eta, om_ext
+real x_dash, dx_dash, tau_a, gam, dom_ext
 real, dimension(imax + 1) :: xt, noise, noise_tilda
-parameter(om_max = 1.1)
-parameter(om_min = 0.9)
-parameter(dt = 1.e-3)
+real, parameter :: om_max = 1.1, om_min = 0.9
 parameter(dom_ext = 6.28 / (imax * dt))
-parameter(jmin = int(om_min / dom_ext))
-parameter(jmax = int(om_max / dom_ext))
+integer, parameter :: jmin = int(om_min / dom_ext), jmax = int(om_max / dom_ext)
 real, dimension(jmax+1) :: A_om_ext
 parameter(tau_a = 0.1)
 parameter(eta = 1.)
@@ -37,14 +35,21 @@ F = 0.02 * eta * k        !>> grow ext Force magnitude
 do j = jmin, jmax !>> j is index of om_ext
 !special conditon
 om_ext = j * dom_ext
+
+
 !>> initial conditions
 t = 0.
 x = 1.
 x_dash = 0.
 y = 0.
+
+
 do i = 1, imax !>> i is time index
 xt(i) = x  !>>> recode x(t)
+write(*,*) t, x
 write(1,*) t, x
+
+
 noise_tilda(i) =0.*1.e-3 * noise(i)   !>>  lowing noize magnitude
 dy = - gam * y - x + noise_tilda(i) + (1. / 2.) * eta * sign(1., x - x_dash) + F * sin(om_ext * t)
 dx = y
@@ -52,7 +57,7 @@ dx_dash = (x - x_dash) / tau_a
 y = y + dy * dt
 x = x + dx * dt
 x_dash = x_dash + dx_dash * dt 
-t = i * dt
+t = t + dt
 end do   !>> i end // !>> fixed om_ext, recode xt!
 write(1,*) ''
 
@@ -63,9 +68,10 @@ t = 0.
 
 
 do i = 1, imax 
-t = i * dt
+
 sumi = sumi + xt(i) * sin(om_ext * t) * dt
 sumr = sumr + xt(i) * cos(om_ext * t) * dt
+t = t + dt
 end do  !>> i end
 
 
