@@ -6,6 +6,7 @@ integer, parameter :: imax = int(tmax/dt)
 real  t, x, y, dx, dy, sumi, sumr, F, eta, om_ext
 real x_dash, dx_dash, tau_a, gam, dom_ext, mu, sigma, random_num
 real, dimension(imax + 1) :: xt, noise, noise_tilda
+real, dimension(imax + 1, 4), dz,z
 real, parameter :: om_max = 1.1, om_min = 0.9
 parameter(dom_ext = 6.28 / (imax * dt))
 integer, parameter :: jmin = int(om_min / dom_ext), jmax = int(om_max / dom_ext)
